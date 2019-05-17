@@ -52,8 +52,10 @@ $config = [
             'showScriptName' => false,
             //'suffix'
             'rules' => [
-                'about' => 'site/about',
-                '<action:(football|voleyball|basketball|hokkey)>' => 'matches/<action>',
+                '/'=> 'site/index',
+                '/bets'=>'site/bets',
+                'matches/<id:\d+>'=>'matches/view',
+                //'<action:(index|football|voleyball|basketball|hokkey)>' => 'matches/<action>',
                 //<a:\w+>
             ],
         ],

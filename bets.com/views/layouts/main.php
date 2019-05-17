@@ -41,11 +41,11 @@ AppAsset::register($this);
 
          
             ['label' => 'Home', 'url' => ['/']],
-            ['label' => 'Football', 'url' => ['/football']],
-            ['label' => 'Voleyball', 'url' => ['/voleyball']],
-            ['label' => 'Basketball', 'url' => ['/basketball']],
-            ['label' => 'Hokkey', 'url' => ['/hokkey']],
-            ['label' => 'About', 'url' => ['/about']],
+            ['label' => 'Football', 'url' => ['matches/1']],
+            ['label' => 'Voleyball', 'url' => ['matches/4']],
+            ['label' => 'Basketball', 'url' => ['matches/2']],
+            ['label' => 'Hokkey', 'url' => ['matches/3']],
+            ['label' => 'Сделать ставку', 'url' => ['/bets']],
 
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/login']]

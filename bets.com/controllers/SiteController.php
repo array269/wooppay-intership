@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\BetsForm;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -9,6 +10,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+
 
 class SiteController extends Controller
 {
@@ -103,15 +105,11 @@ class SiteController extends Controller
      *
      * @return Response|string
      */
-    public function actionContact()
+    public function actionBets()
     {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
+        $model = new BetsForm();
 
-            return $this->refresh();
-        }
-        return $this->render('contact', [
+        return $this->render('form', [
             'model' => $model,
         ]);
     }
