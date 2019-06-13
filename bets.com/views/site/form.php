@@ -1,38 +1,37 @@
 <?php
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+?>
 
-use app\models\Matches;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Html;use yii\widgets\ActiveForm;
+<h3>Укажите данные</h3>
 
-$form = ActiveForm::begin();
-// получаем все live матчи "Футбол"
-    $matches = Matches::getLiveMatches(1);
-// формируем массив, с ключем равным полю 'idmatch' и значением равным полю 'matchname'
-    $itemsMatch = ArrayHelper::map($matches,'idmatch','matchname');
-    $params = [
-        'prompt' => 'Выберите матч'
-    ];
-    echo $form->field($model, 'matchName')->dropDownList($itemsMatch,$params);
+<?php
+$form = ActiveForm::begin([
+    'id' => 'form',
+    'options' => ['class' => 'form-horizontal'],
+    ]);
 
-    //формируем массив результатов матчей
     $results = [
-    '0' => 'Победа',
-    '1' => 'Проигрыш',
-    '2'=>  'Ничья'
+    'Победа' => 'Победа',
+    'Проигрыш' => 'Проигрыш',
+    'Ничья'=>  'Ничья',
     ];
+
     $params = [
     'prompt' => 'Выберите результат матча'
-    ];
-    echo $form->field($model, 'matchResult')->dropDownList($results,$params);
-   // echo $form->field($model, 'phoneNumber');
-    echo   $form->field($model, 'phoneNumber')->widget(\yii\widgets\MaskedInput::className(), [
-    'mask' => '9-999-999-9999',
-]);
-    echo   $form->field($model, 'bet')->widget(\yii\widgets\MaskedInput::className(), [
-    'mask' => '9999999999999',
-]);
+    ];?>
 
-    echo Html::submitButton('Сделать ставку');
+<?= $form->field($model, 'matchresult')->dropDownList($results,$params) ?>
+<?= $form->field($model, 'phonenumber')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '9-999-999-9999',]);?>
+<?= $form->field($model, 'moneybet')->textInput();?>
+    <div class="form-group">
+        <div class="col-lg-offset-1 col-lg-11">
+            <?= Html::submitButton('Продолжить', ['class' => 'btn btn-success']) ?>
+            <?= Html::resetButton('Очистить', ['class' => 'btn btn-reset']) ?>
+        </div>
+    </div>
+<?php ActiveForm::end() ?>
 
-ActiveForm::end();
+
+
 

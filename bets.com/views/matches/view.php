@@ -8,11 +8,11 @@ use yii\helpers\Html;
 
     <?php if ($livematches) { ?>
         <?php foreach ($livematches as $match): ?>
-            <li>
-                <?= Html::encode("{$match->matchname}") ?>
-                <?= 'LIVE'?>
+
+                <?= Html::a(Html::encode("{$match->matchname}"),['/bets'],['class' => 'btn btn-warning']);?>
+                <?= 'Начало матча:'?>
                 <?= $match->matchbegin ?>
-            </li>
+
         <?php endforeach;
     }
     else echo 'Сегодня нет матчей' ?>

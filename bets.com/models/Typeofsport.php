@@ -5,12 +5,20 @@ namespace app\models;
 
 use yii\db\ActiveRecord;
 
-
+/**
+ * Class Typeofsport
+ * @property string $sportname
+ * @package app\models
+ */
 class Typeofsport extends ActiveRecord
 {
+
     public static function  getTitle($idtype)
     {
-        $title=Typeofsport::find()->where('idtype = :idtype',[':idtype'=>$idtype])->one();
-        return $title;
+        $row = Typeofsport::find()
+            ->select('sportname')
+            ->where('idtype = :idtype',[':idtype'=>$idtype])
+            ->one();
+        return $row;
     }
 }

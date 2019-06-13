@@ -48,7 +48,7 @@ AppAsset::register($this);
             ['label' => 'Сделать ставку', 'url' => ['/bets']],
 
             Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/login']]
+                ['label' => 'Login', 'url' => ['/step3']]
             ) : (
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')

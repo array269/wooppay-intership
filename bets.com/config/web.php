@@ -1,9 +1,12 @@
 <?php
 
+
+
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
 $config = [
+    'language' => 'ru-RU',
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
@@ -53,7 +56,11 @@ $config = [
             //'suffix'
             'rules' => [
                 '/'=> 'site/index',
-                '/bets'=>'site/bets',
+                '/bets'=>'site/step1',
+                '/code_error'=>'/site/error2',
+                '/confirm'=>'site/step2',
+                '/congratulate'=>'site/congrats',
+                '/enter-code'=>'site/step3',
                 'matches/<id:\d+>'=>'matches/view',
                 //'<action:(index|football|voleyball|basketball|hokkey)>' => 'matches/<action>',
                 //<a:\w+>

@@ -9,9 +9,9 @@ use app\models\Matches;
 class MatchesController extends Controller
 {
     public function actionView($id)
-
     {
-        $title = Typeofsport::getTitle($id);
+        $title = Typeofsport::findOne($id);
+// $title = Typeofsport::getTitle($id);
         $comingmatches = Matches::getComingMatches($id);
         $livematches = Matches::getLiveMatches($id);
 

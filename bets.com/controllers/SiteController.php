@@ -3,6 +3,9 @@
 namespace app\controllers;
 
 use app\models\BetsForm;
+use app\models\BetsModel;
+use app\models\ConfirmForm;
+use app\models\Matches;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -105,22 +108,76 @@ class SiteController extends Controller
      *
      * @return Response|string
      */
-    public function actionBets()
+    public function actionStep1()
+    {
+//        $liveTime = Matches::getLiveMatches(1);
+
+        $model = new BetsModel();
+        $session = Yii::$app->session;
+        $session->set('model',[$model]);
+
+       /* $model->matchname = 'JUV-BARS';
+        $model->matchresult = 'Ничья';
+        $model->phonenumber = '87054208888';
+        $model->moneybet = '100000';
+        $model->save();*/
+
+        if ($model->load(Yii::$app->request->post()))
+        {
+            return $this->redirect('/confirm');
+        } else {
+            // либо страница отображается первый раз, либо есть ошибка в данных
+            return $this->render('form', ['model' => $model]);
+               }
+    }
+    public function actionStep2()
     {
         $model = new BetsForm();
+        $session = Yii::$app->session;
+        $match_result = $session['model'][0]['matchresult'];
+        $phone_number = $session['model'][0]['phonenumber'];
+        $money_bet = $session['model'][0]['moneybet'];
+        //$session->destroy();
+        $model->matchresult = $match_result;
+        $model->phonenumber = $phone_number;
+        $model->moneybet = $money_bet;
 
-        return $this->render('form', [
-            'model' => $model,
-        ]);
+        if ($model->load(Yii::$app->request->post())&& $model->save())
+        {
+            return $this->redirect('/enter-code');
+        }
+        else
+        return $this->render('form_confirm',['model'=>$model]);
+
     }
+
+    public function actionStep3()
+    {
+        $conf = new ConfirmForm();
+        if ($conf->load(Yii::$app->request->post()))
+        {
+            $data=$_POST;
+                if($conf->checkCode($data))
+                    echo "Неверный код";
+                exit;
+        }
+        return $this->render('confirm',['conf'=>$conf]);
+    }
+
+
 
     /**
      * Displays about page.
      *
      * @return string
      */
-    public function actionAbout()
+    public function actionCongrats()
     {
-        return $this->render('about');
+        return $this->render('congratulate');
+    }
+
+    public function actionError2()
+    {
+        return $this->render('code_error');
     }
 }
