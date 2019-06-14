@@ -12,13 +12,13 @@ class MatchesController extends Controller
     {
         $title = Typeofsport::findOne($id);
 // $title = Typeofsport::getTitle($id);
-        $comingmatches = Matches::getComingMatches($id);
-        $livematches = Matches::getLiveMatches($id);
+        $coming_matches = Matches::getComingMatches($id);
+        $live_matches = Matches::getLiveMatches($id);
 
         return $this->render('view', [
            'title'=>$title,
-           'livematches' => $livematches,
-           'comingmatches' => $comingmatches,
+           'live_matches' => $live_matches,
+           'coming_matches' => $coming_matches,
         ]);
     }
 }

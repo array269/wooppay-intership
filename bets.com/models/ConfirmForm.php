@@ -33,9 +33,11 @@ class ConfirmForm extends ActiveRecord
 
     public static function checkCode($data)
     {
-
         $code = $data['ConfirmForm']['code'];
-        $result = ConfirmForm::find()->where('code = :code',[':code'=>$code])->all();
+        $result = ConfirmForm::find()
+            ->where('code = :code',[':code'=>$code])
+            ->all();
+
         if(!empty($result)){
             header("Location: http://bets.com/congratulate");
         } else  header("Location: http://bets.com/code_error");

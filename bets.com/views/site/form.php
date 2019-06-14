@@ -21,9 +21,9 @@ $form = ActiveForm::begin([
     'prompt' => 'Выберите результат матча'
     ];?>
 
-<?= $form->field($model, 'matchresult')->dropDownList($results,$params) ?>
-<?= $form->field($model, 'phonenumber')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '9-999-999-9999',]);?>
-<?= $form->field($model, 'moneybet')->textInput();?>
+<?= $form->field($model, 'match_result')->dropDownList($results,$params) ?>
+<?= $form->field($model, 'phone_number')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '9-999-999-9999',]);?>
+<?= $form->field($model, 'money_bet')->textInput();?>
     <div class="form-group">
         <div class="col-lg-offset-1 col-lg-11">
             <?= Html::submitButton('Продолжить', ['class' => 'btn btn-success']) ?>

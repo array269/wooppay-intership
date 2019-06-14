@@ -3,9 +3,7 @@
 
 <?php
 
-/**
- * @var array $liveTime
- */
+
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;

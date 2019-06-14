@@ -8,7 +8,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 ?>
 
-<h4>Введите код отправленный на номер <?= $_SESSION['model'][0]['phonenumber'];?></h4>
+<h4>Введите код отправленный на номер <?= $_SESSION['model'][0]['phone_number'];?></h4>
 
 <?php
 $form = ActiveForm::begin([]);

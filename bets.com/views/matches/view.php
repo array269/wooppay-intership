@@ -1,4 +1,9 @@
 <?php
+/* @var $title array */
+/* @var $live_matches array */
+/* @var $coming_matches array */
+
+
 use yii\helpers\Html;
 
 ?>
@@ -6,8 +11,8 @@ use yii\helpers\Html;
 <ul>
     <h2>Live Matches</h2>
 
-    <?php if ($livematches) { ?>
-        <?php foreach ($livematches as $match): ?>
+    <?php if ($live_matches) { ?>
+        <?php foreach ($live_matches as $match): ?>
 
                 <?= Html::a(Html::encode("{$match->matchname}"),['/bets'],['class' => 'btn btn-warning']);?>
                 <?= 'Начало матча:'?>
@@ -19,7 +24,7 @@ use yii\helpers\Html;
 </ul>
 <ul>
     <h2>Coming Soon</h2>
-    <?php foreach ($comingmatches as $match): ?>
+    <?php foreach ($coming_matches as $match): ?>
         <li>
             <?= Html::encode("{$match->matchname}") ?>:
             <?= $match->matchbegin ?>

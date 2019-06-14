@@ -70,112 +70,83 @@ class SiteController extends Controller
     }
 
     /**
-     * Login action.
-     *
-     * @return Response|string
-     */
-    public function actionLogin()
-    {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
-
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
-
-        $model->password = '';
-        return $this->render('login', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
-
-        return $this->goHome();
-    }
-
-    /**
-     * Displays contact page.
-     *
-     * @return Response|string
+     * Displays step1 page.
      */
     public function actionStep1()
     {
-//        $liveTime = Matches::getLiveMatches(1);
-
         $model = new BetsModel();
         $session = Yii::$app->session;
         $session->set('model',[$model]);
 
+        //Присвоение данных
        /* $model->matchname = 'JUV-BARS';
         $model->matchresult = 'Ничья';
         $model->phonenumber = '87054208888';
         $model->moneybet = '100000';
         $model->save();*/
 
-        if ($model->load(Yii::$app->request->post()))
-        {
+        if ($model->load(Yii::$app->request->post()) && $model->validate()){
             return $this->redirect('/confirm');
         } else {
             // либо страница отображается первый раз, либо есть ошибка в данных
             return $this->render('form', ['model' => $model]);
-               }
+        }
     }
+
+
+    /**
+     * Displays step2 page.
+     */
     public function actionStep2()
     {
         $model = new BetsForm();
+        //Стартуем сессию
         $session = Yii::$app->session;
-        $match_result = $session['model'][0]['matchresult'];
-        $phone_number = $session['model'][0]['phonenumber'];
-        $money_bet = $session['model'][0]['moneybet'];
+        $match_result = $session['model'][0]['match_result'];
+        $phone_number = $session['model'][0]['phone_number'];
+        $money_bet = $session['model'][0]['money_bet'];
+        //Уничтожаем сессию
         //$session->destroy();
         $model->matchresult = $match_result;
         $model->phonenumber = $phone_number;
         $model->moneybet = $money_bet;
 
-        if ($model->load(Yii::$app->request->post())&& $model->save())
-        {
+        if ($model->load(Yii::$app->request->post())&& $model->save()){
             return $this->redirect('/enter-code');
+        } else {
+            return $this->render('form_confirm',['model'=>$model]);
         }
-        else
-        return $this->render('form_confirm',['model'=>$model]);
 
     }
 
+
+    /**
+     * Displays step3 page.
+     */
     public function actionStep3()
     {
         $conf = new ConfirmForm();
-        if ($conf->load(Yii::$app->request->post()))
-        {
-            $data=$_POST;
-                if($conf->checkCode($data))
-                    echo "Неверный код";
+        if ($conf->load(Yii::$app->request->post()) && $conf->validate()){
+            $data=Yii::$app->request->post();
+                $conf->checkCode($data);
                 exit;
+        } else {
+            return $this->render('confirm', ['conf' => $conf]);
         }
-        return $this->render('confirm',['conf'=>$conf]);
     }
 
 
 
     /**
-     * Displays about page.
-     *
-     * @return string
+     * Displays congratulate page.
      */
     public function actionCongrats()
     {
         return $this->render('congratulate');
     }
-
+    /**
+     * Displays code_error page.
+     */
     public function actionError2()
     {
         return $this->render('code_error');
